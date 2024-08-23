@@ -17,7 +17,7 @@ Siga os passos abaixo para servir o projeto.
 1. Clonar o repositório no seu local `git clone git@github.com:TarsisioXavier/carnet-api.git`.  
 2. Entre no diretório criado e suba os contêineres do ambiente usando `docker-compose up -d`.  
 3. Entre no container do PHP usando `docker exec -tiu app php-fpm83 sh`.  
-4. Dentro do container, execute o comando `composer install` para instalar as dependências.  
+4. Dentro do container, execute o comando `composer install && cp .env.example .env && php artisan key:generate` para instalar as dependências e definir as variáveis de ambiente.  
 5. A API estará acessível via `http://172.40.10.30/`.  
 6. (Opicional): Execute `php artisan migrate:fresh --seed` para semear o banco de dados.  
 
