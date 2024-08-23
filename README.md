@@ -19,3 +19,6 @@ Siga os passos abaixo para servir o projeto.
 3. Entre no container do PHP usando `docker exec -tiu app php-fpm83 sh`.  
 4. Dentro do container, execute o comando `composer install` para instalar as dependências.  
 5. A API estará acessível via `http://172.40.10.30/`.  
+6. (Opicional): Execute `php artisan migrate:fresh --seed` para semear o banco de dados.  
+
+A coleção do Postman se encontra em `docs/postman.json`, importe a coleção para o Postman e começe a interagir com a API.
