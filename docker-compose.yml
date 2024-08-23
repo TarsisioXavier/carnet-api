@@ -1,0 +1,81 @@
+version: '3.3'
+
+services:
+  carnet-api:
+    container_name: carnet-api
+    image: nginx:alpine
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8080:80
+    environment:
+      - NGINX_HOST=172.40.10.30
+      - NGINX_PORT=80
+    networks:
+      carnet-network:
+        ipv4_address: 172.40.10.30
+        aliases:
+          - carnet-api
+
+  php-fpm83:
+    container_name: php-fpm83
+    build:
+      dockerfile: ./docker/php-fpm83.Dockerfile
+      context: .
+    volumes:
+      - .:/var/www/html
+      - ./docker/php/8.3/fpm/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    networks:
+      carnet-network:
+        ipv4_address: 172.40.10.20
+        aliases:
+          - php-fpm83
+
+  mysql8:
+    container_name: mysql80
+    image: mysql:8-debian
+    environment:
+      MYSQL_DATABASE: 'carnet'
+      MYSQL_USER: 'app'
+      MYSQL_PASSWORD: 'secret'
+      MYSQL_ROOT_PASSWORD: 'root'
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - db-data:/var/lib/mysql
+    networks:
+      carnet-network:
+        ipv4_address: 172.40.10.10
+        aliases:
+          - mysql80
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    networks:
+      carnet-network:
+        ipv4_address: 172.40.10.11
+        aliases:
+          - redis
+
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog:latest
+    networks:
+      carnet-network:
+        ipv4_address: 172.40.10.12
+        aliases:
+          - mailhog
+
+volumes:
+  db-data:
+    driver: local
+
+networks:
+  carnet-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.40.10.0/24

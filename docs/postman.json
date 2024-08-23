@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "36d8ddb2-8b1f-4aeb-a320-172f852c3778",
+		"name": "Carnet API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2169758"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "V1",
+					"item": [
+						{
+							"name": "Carnet",
+							"item": [
+								{
+									"name": "Show",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{host}}/api/v1/carnet/{{carnet_id}}",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"carnet",
+												"{{carnet_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var carnet_id = JSON.parse(responseBody);",
+													"",
+													"carnet_id = carnet_id.id;",
+													"",
+													"pm.collectionVariables.set(\"carnet_id\", carnet_id);",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "valor_total",
+													"value": "100",
+													"type": "text"
+												},
+												{
+													"key": "qtd_parcelas",
+													"value": "3",
+													"type": "text"
+												},
+												{
+													"key": "data_primeiro_vencimento",
+													"value": "2025-01-01",
+													"type": "text"
+												},
+												{
+													"key": "periodicidade",
+													"value": "semanal",
+													"type": "text"
+												},
+												{
+													"key": "valor_entrada",
+													"value": "0",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{host}}/api/v1/carnet",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"carnet"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://172.40.10.30",
+			"type": "string"
+		},
+		{
+			"key": "carnet_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
